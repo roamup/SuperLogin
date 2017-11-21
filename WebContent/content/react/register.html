@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/SuperLogin/content/javascript/react.js"></script>
+<script src="/SuperLogin/content/javascript/react-dom.js"></script>
+<script src="/SuperLogin/content/javascript/browser.min.js"></script>
+<script src="/SuperLogin/content/javascript/jquery.min.js"></script>
+</head>
+<body>
+	<div id="example"></div>
+	<script type="text/babel">
+  var User = React.createClass({
+  getInitialState: function() {
+    return {
+      name: '',
+      password: ''
+    };
+  },
+
+  register : function(){
+    var name = this.refs.name.value;
+	var password =  this.refs.password.value;
+    $.post(this.props.source, {
+            name: name,
+            password: password
+        }, 
+       function(result) {
+     if (this.isMounted()) {
+       this.setState({
+         name: result.name,
+         password: result.password
+       });
+     alert( this.state.name);
+    }
+    }.bind(this));
+  },
+
+  render: function() {
+    return (
+      <div>
+        username:<input type="text" ref="name" /> 
+	    password:<input	type="password"  ref="password" /> 
+        <input type="submit" value="register" onClick={this.register} />
+      </div>
+    );
+  }
+});
+
+ReactDOM.render(
+  <User source="/SuperLogin/register" />,
+  document.getElementById('example')
+);
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" 	src="/SuperLogin/content/javascript/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+	welcomeUser();
+}); 
+
+function welcomeUser(){
+	//var test =$("#welcomeUser");
+	//var test = ${welcomeUser}
+	var userName =  "${welcomeUser.name}";
+	var hour = new Date().getHours();
+	var noon = "";
+	if(hour<12){
+		noon = 'Morning ';
+	}else if(hour>=12 && hour<20 ){
+		noon = 'afternoon ';
+	}else{
+		noon = 'night ';
+	}
+	document.getElementById("welcome").innerText = noon + userName;
+	
+	document.getElementById("permissionword").innerText =  "${permission}";
+};
+
+</script>
+<title>Insert title here</title>
+</head>
+
+<body>
+	welcome!
+	<label id ="welcome"></label>
+	<label id ="permissionword"></label>
+	<a href="/SuperLogin/lookForRes"><button>这里有资源</button></a>
+</body>
+</html>

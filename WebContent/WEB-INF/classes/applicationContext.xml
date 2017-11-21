@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	 xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans    
+    http://www.springframework.org/schema/beans/spring-beans.xsd    
+    http://www.springframework.org/schema/jdbc 
+    http://www.springframework.org/schema/jdbc/spring-jdbc.xsd 
+    http://www.springframework.org/schema/tx    
+    http://www.springframework.org/schema/tx/spring-tx.xsd   
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd  
+    http://www.springframework.org/schema/context   
+    http://www.springframework.org/schema/context/spring-context.xsd 
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task.xsd">
+	
+    <!-- 导入缓存的相关配置 -->
+	<!-- <import resource="classpath:spring-cache.xml" /> -->
+	 <!-- 导入shiro的相关配置 -->
+    <import resource="classpath:spring-shiro.xml" />
+    
+	<!-- 开启自动扫包 -->
+	<context:component-scan base-package="com.roam">
+		<!--制定扫包规则，不扫描@Controller注解的JAVA类，其他的还是要扫描 -->
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	
+	<!-- 加载数据库配置文件 -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:jdbc.properties</value>
+		</property>
+	</bean>
+	
+	<!-- 配置数据源，并设置连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="url" value="${url}" />
+		<property name="driverClassName" value="${driverClassName}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
+	</bean>
+
+	<!-- ******************************spring和mybatis的整合配置 ***************************************** -->
+	<!--配置sessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 加载mybatis配置文件 -->
+		<property name="configLocation" value="classpath:mybatis.cfg.xml" />
+		<!-- 数据库连接池 -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!--mapper批量扫描，从mapper包中扫描出mapper接口，自动创建代理对象并在spring容器中注册 -->
+	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 扫描包路径 扫描多个包 中间使用半角逗号分隔 -->
+		<property name="basePackage" value="com.roam.mapper"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+	<!-- ******************************spring和mybatis的整合配置结束************************************** -->
+
+	<!--***************************************** 事务控制 ********************************************* -->
+	<!-- 配置事务管理器 对mabytis使用数据库事务控制，spring使用jdbc的事务控制类 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 启用事务 通知给事务管理器 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="insert*" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="save*" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="delete*" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED"
+				rollback-for="java.lang.Excption" />
+			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- AOP代理设置 调用通知 -->
+	<aop:config proxy-target-class="true">
+	    <!--切面和切点 所有类的所有方法（不管什么参数） -->
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.roam.service.impl.*.*(..))" />
+	</aop:config>
+
+</beans>
