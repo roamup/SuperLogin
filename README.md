@@ -1,2 +1,4 @@
 # SuperLogin
-springmvc + mybatis + shiro + ehcache 
+springmvc + mybatis + shiro + ehcache + react
+
+
