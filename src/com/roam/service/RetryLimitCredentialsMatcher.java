@@ -11,6 +11,11 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 
+/**
+ * 
+ *  can not understand
+ *
+ */
 public class RetryLimitCredentialsMatcher extends HashedCredentialsMatcher {
 
 	private Ehcache passwordRetryCache;

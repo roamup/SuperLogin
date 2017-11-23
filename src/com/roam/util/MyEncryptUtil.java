@@ -9,7 +9,13 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;  
   
 import sun.misc.BASE64Decoder;  
-import sun.misc.BASE64Encoder;  
+import sun.misc.BASE64Encoder;
+
+/**
+ * 
+ *  is just a test?
+ *
+ */
 public class MyEncryptUtil {
 	 // 密钥是16位长度的byte[]进行Base64转换后得到的字符串  
     public static String key = "LmMGStGtOpF4xNyvYt54EQ==";  
