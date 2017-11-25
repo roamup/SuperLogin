@@ -30,9 +30,6 @@ public class LoginController {
 	 *  ^(*￣(oo)￣)^: the request method must be post
 	 *  
 	 *  P.S:  note "@ModelAttribute("user")" because can't find why it exist
-	 * @param user (Object User)
-	 * @return resultUser (Object User)
-	 * @throws Exception   (default exception to avoid Unexpected exception)
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -48,12 +45,7 @@ public class LoginController {
 	/**
 	 *  login 
 	 *  if the request URL contains login use this method
-	 *  
 	 *  ^(*￣(oo)￣)^: the request method must be post
-	 *  
-	 * @param user (Object User)
-	 * @param welcomeView (ModelAndView: a dataType??)
-	 * @return welcomeView
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(User user, ModelAndView welcomeView) {
@@ -87,14 +79,10 @@ public class LoginController {
 	// @RequiresRoles("admin")
 	// 权限注解
 	// @RequiresPermissions("adminpermission")
-	
 	/**
 	 * lookForRes: check the user role
 	 * 
 	 * ^(*￣(oo)￣)^: the request method need be get
-	 * 
-	 * @param view
-	 * @return
 	 */
 	@RequestMapping(value = "/lookForRes", method = RequestMethod.GET)
 	public ModelAndView lookForRes(ModelAndView view) {
