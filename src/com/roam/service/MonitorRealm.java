@@ -27,11 +27,6 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 
-/**
- * 
- * can not understand ....
- *
- */
 @Service("monitorRealm")
 public class MonitorRealm extends AuthorizingRealm {
 
@@ -45,6 +40,7 @@ public class MonitorRealm extends AuthorizingRealm {
 	IRoleService roleService;
 
 	private Ehcache passwordRetryCache;
+	private AtomicInteger retryCount ;
 
 	public MonitorRealm() {
 		super();
@@ -74,8 +70,7 @@ public class MonitorRealm extends AuthorizingRealm {
 
 	// 认证
 	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
-			throws AuthenticationException {
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken){
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 		String username = (String) token.getPrincipal();
 		countLoginErrorCount(username);
@@ -84,11 +79,10 @@ public class MonitorRealm extends AuthorizingRealm {
 		checkUser.setPassword(EncrypUtil.encryptMD5(new String((char[]) token.getCredentials())));
 		User resultUser = loginService.checkLoginUser(checkUser);
 		if (resultUser == null) {
-			return null;
+			throw new AuthenticationException(String.valueOf(3-retryCount.intValue()));
 		}
 		passwordRetryCache.remove(username);
-		return new SimpleAuthenticationInfo(resultUser.getName(), new String((char[]) token.getCredentials()),
-				getName());
+		return new SimpleAuthenticationInfo(resultUser.getName(), new String((char[]) token.getCredentials()), getName())  ;
 	}
 
 	public void clearCachedAuthorizationInfo(String principal) {
@@ -103,9 +97,8 @@ public class MonitorRealm extends AuthorizingRealm {
 			element = new Element(username, new AtomicInteger(0));
 			passwordRetryCache.put(element);
 		}
-		AtomicInteger retryCount = (AtomicInteger) element.getObjectValue();
-		if (retryCount.incrementAndGet() > 5) {
-			// if retry count > 5 throw
+		retryCount = (AtomicInteger) element.getObjectValue();
+		if (retryCount.incrementAndGet() >= 3 ) {
 			throw new ExcessiveAttemptsException();
 		}
 	}
