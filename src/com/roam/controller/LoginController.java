@@ -35,9 +35,9 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(User user, ModelAndView welcomeView) {
+	public ModelAndView login(User user, String remeberMe, ModelAndView welcomeView) {
 		UsernamePasswordToken token = new UsernamePasswordToken(user.getName(), user.getPassword());//user authentication
-		token.setRememberMe(true);
+		token.setRememberMe(remeberMe==null ? false : true );
 		Subject subject = SecurityUtils.getSubject();
 		try {
 			subject.login(token);
@@ -99,4 +99,5 @@ public class LoginController {
 		view.setViewName("redirect:content/html/login.html");
 		return view;
 	}
+	
 }
