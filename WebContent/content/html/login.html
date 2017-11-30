@@ -2,20 +2,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript" 	src="/SuperLogin/content/javascript/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/SuperLogin/content/javascript/jquery.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){ 
-	loginErrorTimeTips();
-}); 
+	$(document).ready(function() {
+		loginErrorTimeTips();
+	});
 
-function loginErrorTimeTips(){
-	var pwdErrorLoginTips =  "${pwdErrorLoginTips}";
-	var isTipsShow = "${isTipsShow}";
-	if(isTipsShow == 'Y'){
-    	alert(pwdErrorLoginTips);
-	}
-};
-
+	function loginErrorTimeTips() {
+		var pwdErrorLoginTips = "${pwdErrorLoginTips}";
+		if (!(pwdErrorLoginTips.indexOf("$") >= 0)) {
+			alert(pwdErrorLoginTips);
+		}
+	};
 </script>
 <title>Super Login</title>
 </head>
@@ -24,10 +23,9 @@ function loginErrorTimeTips(){
 	<h1>Super Login!</h1>
 	<form action="/SuperLogin/login" method="post">
 		username:<input type="text" id="name" name="name"> 
-		password:<input	type="password"  id="password" name="password"> 
-	    <input type="submit" value="login">
-	    <input name="remeberMe" type="checkbox" value="remeberMe" >记住我的登录信息
+		password:<input type="password" id="password" name="password">  
+		<input type="submit" value="login"> 
+		<input name="remeberMe" type="checkbox" value="remeberMe">记住我的登录信息
 	</form>
-    <br>
 </body>
 </html>

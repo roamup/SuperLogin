@@ -43,14 +43,12 @@ public class LoginController {
 			subject.login(token);
 		} catch (ExcessiveAttemptsException e) {
 			welcomeView.setViewName("login");
-			welcomeView.addObject("isTipsShow","Y");
 			welcomeView.addObject("pwdErrorLoginTips","该用户登陆错误次数超过3次，请联系客服~");
 			return welcomeView;
 		} 
 		//认证失败
 		catch (AuthenticationException e) {
 			welcomeView.setViewName("login");
-			welcomeView.addObject("isTipsShow","Y");
 			welcomeView.addObject("pwdErrorLoginTips","该用户还有"+ e.getMessage() + "次登录机会~");
 			return welcomeView;
 		}
