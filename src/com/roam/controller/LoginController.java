@@ -36,7 +36,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(User user, String remeberMe, ModelAndView welcomeView) {
-		UsernamePasswordToken token = new UsernamePasswordToken(user.getName(), user.getPassword());//user authentication
+		UsernamePasswordToken token = new UsernamePasswordToken(user.getName(), user.getPassword());
 		token.setRememberMe(remeberMe==null ? false : true );
 		Subject subject = SecurityUtils.getSubject();
 		try {
