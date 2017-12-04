@@ -1,18 +1,18 @@
 package com.roam.service;
 
-import java.io.Serializable;  
-import java.util.Deque;  
-import java.util.LinkedList;  
-import javax.servlet.ServletRequest;  
-import javax.servlet.ServletResponse;  
-import org.apache.shiro.cache.Cache;  
-import org.apache.shiro.cache.CacheManager;  
-import org.apache.shiro.session.Session;  
-import org.apache.shiro.session.mgt.DefaultSessionKey;  
-import org.apache.shiro.session.mgt.SessionManager;  
-import org.apache.shiro.subject.Subject;  
-import org.apache.shiro.web.filter.AccessControlFilter;  
-import org.apache.shiro.web.util.WebUtils;  
+import java.io.Serializable;
+import java.util.Deque;
+import java.util.LinkedList;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.DefaultSessionKey;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.filter.AccessControlFilter;
+import org.apache.shiro.web.util.WebUtils;
 
 public class KickoutSessionControlFilter extends AccessControlFilter {
 
@@ -52,6 +52,10 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 		Subject subject = getSubject(request, response);
+		if (!subject.isAuthenticated() && !subject.isRemembered()) {
+			// 如果没有登录，直接进行之后的流程
+			return true;
+		}
 
 		Session session = subject.getSession();
 		String username = (String) subject.getPrincipal();
@@ -98,7 +102,6 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
 			WebUtils.issueRedirect(request, response, kickoutUrl);
 			return false;
 		}
-		
 
 		return true;
 	}
