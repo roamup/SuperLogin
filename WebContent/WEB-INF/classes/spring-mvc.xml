@@ -23,7 +23,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	</context:component-scan>
 	
 	<!-- 配置视图解析器 -->
-	<!-- prefix和suffix：查找视图页面的前缀和后缀（前缀[逻辑视图名]后缀）， 比如传进来的逻辑视图名为WEB-INF/jsp/hello，则该该jsp视图页面应该存放在“WEB-INF/jsp/hello.jsp”； -->
+	<!-- prefix和suffix：查找视图页面的前缀和后缀（前缀[逻辑视图名]后缀） -->
 	<!-- html视图解析器 必须先配置freemarkerConfig,注意html是没有prefix前缀属性的-->
     <bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">  
         <property name="templateLoaderPath" value="/content/html" />  
@@ -50,7 +50,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	<mvc:resources location="/content/react/" mapping="/content/react/**" />
 	<mvc:resources location="/content/javascript/" mapping="/content/javascript/**" />
 	<mvc:resources location="/content/css/" mapping="/content/css/**" />
-	<mvc:resources location="/content/scripts/layer" mapping="/content/scripts/layer/**" />
 	<mvc:resources location="/content/images/" mapping="/content/images/**" />
 
 </beans>

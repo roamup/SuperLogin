@@ -18,9 +18,7 @@
     http://www.springframework.org/schema/task
     http://www.springframework.org/schema/task/spring-task.xsd">
 	
-    <!-- 导入缓存的相关配置 -->
-	<!-- <import resource="classpath:spring-cache.xml" /> -->
-	 <!-- 导入shiro的相关配置 -->
+    <!-- 导入shiro的相关配置 -->
     <import resource="classpath:spring-shiro.xml" />
     
 	<!-- 开启自动扫包 -->
@@ -30,8 +28,7 @@
 	</context:component-scan>
 	
 	<!-- 加载数据库配置文件 -->
-	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
 			<value>classpath:jdbc.properties</value>
 		</property>
@@ -45,7 +42,7 @@
 		<property name="password" value="${password}" />
 	</bean>
 
-	<!-- ******************************spring和mybatis的整合配置 ***************************************** -->
+	<!-- spring和mybatis的整合配置  -->
 	<!--配置sessionFactory -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- 加载mybatis配置文件 -->
@@ -53,16 +50,16 @@
 		<!-- 数据库连接池 -->
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+
 	<!--mapper批量扫描，从mapper包中扫描出mapper接口，自动创建代理对象并在spring容器中注册 -->
 	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- 扫描包路径 扫描多个包 中间使用半角逗号分隔 -->
 		<property name="basePackage" value="com.roam.mapper"></property>
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
-	<!-- ******************************spring和mybatis的整合配置结束************************************** -->
+	<!--spring和mybatis的整合配置结束 -->
 
-	<!--***************************************** 事务控制 ********************************************* -->
+	<!-- 事务控制 -->
 	<!-- 配置事务管理器 对mabytis使用数据库事务控制，spring使用jdbc的事务控制类 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
