@@ -1,4 +1,4 @@
-package com.roam.util;
+/*package com.roam.util;
 
 import java.io.IOException;  
 import java.io.UnsupportedEncodingException;  
@@ -11,23 +11,18 @@ import javax.crypto.spec.SecretKeySpec;
 import sun.misc.BASE64Decoder;  
 import sun.misc.BASE64Encoder;
 
-/**
- * 
- *  is just a test?
- *
- */
 public class MyEncryptUtil {
 	 // 密钥是16位长度的byte[]进行Base64转换后得到的字符串  
     public static String key = "LmMGStGtOpF4xNyvYt54EQ==";  
   
-    /** 
+    *//** 
      * <li> 
      * 方法名称:encrypt</li> <li> 
      * 加密方法 
      * @param xmlStr 
      *            需要加密的消息字符串 
      * @return 加密后的字符串 
-     */  
+     *//*  
     public static String encrypt(String xmlStr) {  
         byte[] encrypt = null;  
   
@@ -66,7 +61,7 @@ public class MyEncryptUtil {
         return new BASE64Encoder().encode(temp);  
     }  
   
-    /** 
+    *//** 
      * <li> 
      * 方法名称:encrypt</li> <li> 
      * 功能描述: 
@@ -81,7 +76,7 @@ public class MyEncryptUtil {
      *            需要解密的消息字符串 
      * @return 解密后的字符串 
      * @throws Exception 
-     */  
+     *//*  
     public static String decrypt(String xmlStr) throws Exception {  
         // base64解码  
         BASE64Decoder decoder = new BASE64Decoder();  
@@ -128,7 +123,7 @@ public class MyEncryptUtil {
         return new String(temp, 16, temp.length - 16, "utf-8");  
     }  
   
-    /** 
+    *//** 
      * <li> 
      * 方法名称:TripleDES_CBC_Encrypt</li> <li> 
      * 功能描述: 
@@ -147,7 +142,7 @@ public class MyEncryptUtil {
      *            IV偏转向量，由8位字节数组通过IvParameterSpec类转换而成。 
      * @return 加密后的字节数组 
      * @throws Exception 
-     */  
+     *//*  
     public static byte[] TripleDES_CBC_Encrypt(byte[] sourceBuf,  
             SecretKeySpec deskey, IvParameterSpec ivParam) throws Exception {  
         byte[] cipherByte;  
@@ -161,7 +156,7 @@ public class MyEncryptUtil {
         return cipherByte;  
     }  
   
-    /** 
+    *//** 
      * <li> 
      * 方法名称:TripleDES_CBC_Decrypt</li> <li> 
      * 功能描述: 
@@ -180,7 +175,7 @@ public class MyEncryptUtil {
      *            IV偏转向量，由6位字节数组通过IvParameterSpec类转换而成。 
      * @return 解密后的字节数组 
      * @throws Exception 
-     */  
+     *//*  
     public static byte[] TripleDES_CBC_Decrypt(byte[] sourceBuf,  
             SecretKeySpec deskey, IvParameterSpec ivParam) throws Exception {  
   
@@ -195,7 +190,7 @@ public class MyEncryptUtil {
         return cipherByte;  
     }  
   
-    /** 
+    *//** 
      * <li> 
      * 方法名称:DES_CBC_Encrypt</li> <li> 
      * 功能描述: 
@@ -214,7 +209,7 @@ public class MyEncryptUtil {
      *            IV偏转向量，由8位字节数组通过IvParameterSpec类转换而成。 
      * @return 加密后的字节数组 
      * @throws Exception 
-     */  
+     *//*  
     public static byte[] DES_CBC_Encrypt(byte[] sourceBuf,  
             SecretKeySpec deskey, IvParameterSpec ivParam) throws Exception {  
         byte[] cipherByte;  
@@ -228,7 +223,7 @@ public class MyEncryptUtil {
         return cipherByte;  
     }  
   
-    /** 
+    *//** 
      * <li> 
      * 方法名称:DES_CBC_Decrypt</li> <li> 
      * 功能描述: 
@@ -247,7 +242,7 @@ public class MyEncryptUtil {
      *            IV偏转向量，由6位字节数组通过IvParameterSpec类转换而成。 
      * @return 解密后的字节数组 
      * @throws Exception 
-     */  
+     *//*  
     public static byte[] DES_CBC_Decrypt(byte[] sourceBuf,  
             SecretKeySpec deskey, IvParameterSpec ivParam) throws Exception {  
   
@@ -262,7 +257,7 @@ public class MyEncryptUtil {
         return cipherByte;  
     }  
   
-    /** 
+    *//** 
      * <li> 
      * 方法名称:MD5Hash</li> <li> 
      * 功能描述: 
@@ -281,7 +276,7 @@ public class MyEncryptUtil {
      *            需要加密的数组长度。 
      * @return 
      * @throws Exception 
-     */  
+     *//*  
     public static byte[] MD5Hash(byte[] buf, int offset, int length)  
             throws Exception {  
         MessageDigest md = MessageDigest.getInstance("MD5");  
@@ -289,7 +284,7 @@ public class MyEncryptUtil {
         return md.digest();  
     }  
   
-    /** 
+    *//** 
      * <li> 
      * 方法名称:byte2hex</li> <li> 
      * 功能描述: 
@@ -303,7 +298,7 @@ public class MyEncryptUtil {
      * @param inStr 
      *            需要转换字节数组。 
      * @return 字节数组的二进制表示。 
-     */  
+     *//*  
     public static String byte2hex(byte[] inStr) {  
         String stmp;  
         StringBuffer out = new StringBuffer(inStr.length * 2);  
@@ -321,7 +316,7 @@ public class MyEncryptUtil {
         return out.toString();  
     }  
   
-    /** 
+    *//** 
      * <li> 
      * 方法名称:addMD5</li> <li> 
      * 功能描述: 
@@ -337,7 +332,7 @@ public class MyEncryptUtil {
      * @param bodyByte 
      *            加密内容字节数组 
      * @return 组合后的字节数组，比加密内容长16个字节。 
-     */  
+     *//*  
     public static byte[] addMD5(byte[] md5Byte, byte[] bodyByte) {  
         int length = bodyByte.length + md5Byte.length;  
         byte[] resutlByte = new byte[length];  
@@ -354,7 +349,7 @@ public class MyEncryptUtil {
         return resutlByte;  
     }  
   
-    /** 
+    *//** 
      * <li> 
      * 方法名称:getKeyIV</li> <li> 
      * 功能描述: 
@@ -367,7 +362,7 @@ public class MyEncryptUtil {
      * @param encryptKey 
      * @param key 
      * @param iv 
-     */  
+     *//*  
     public static void getKeyIV(String encryptKey, byte[] key, byte[] iv) {  
         // 密钥Base64解密  
         BASE64Decoder decoder = new BASE64Decoder();  
@@ -392,3 +387,4 @@ public class MyEncryptUtil {
         System.out.println(encrypt("123456"));  
     }  
 }
+*/
