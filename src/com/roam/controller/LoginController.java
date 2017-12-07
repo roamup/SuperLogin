@@ -4,6 +4,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +98,30 @@ public class LoginController {
 		}
 		view.setViewName("redirect:content/html/login.html");
 		return view;
+	}
+	
+	@RequestMapping(value = "/changeToAdmin", method = RequestMethod.GET)
+	public ModelAndView ChangeToAdmin(ModelAndView view){
+		Subject subject = SecurityUtils.getSubject();
+		User user = new User();
+		user.setName(subject.getPrincipal().toString());
+		User adminUser = loginService.findUserByUserId(2);
+		subject.runAs(new SimplePrincipalCollection(adminUser.getName(), ""));  
+		if (subject.isPermitted("adminpermission")) {
+			view.addObject("permission", "给管理员递茶");
+		} else if (subject.isPermitted("userpermission")) {
+			view.addObject("permission", "用户棒棒哒");
+		} else {
+			view.addObject("permission", "游客你好");
+		}
+		view.setViewName("resource/welcome");
+		view.addObject("welcomeUser", user);
+		return view;
+		
+		//身份回退
+		/*if(subject.isRunAs()) {  
+		       subject.releaseRunAs();  
+		 }  */
 	}
 	
 }

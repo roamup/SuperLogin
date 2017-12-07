@@ -25,4 +25,11 @@ public class LoginServiceImpl implements ILoginService{
 		return userMapper.checkLoginUser(user);
 	}
 
+	@Override
+	public User findUserByUserId(Integer id) {
+		return userMapper.selectByPrimaryKey(id);
+	}
+	
+	
+
 }

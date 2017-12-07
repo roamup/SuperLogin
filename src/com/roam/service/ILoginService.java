@@ -7,4 +7,6 @@ public interface ILoginService {
 	User checkLoginUser(User user);
 
 	User register(User user);
+	
+	User findUserByUserId(Integer id);
 }
