@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	id="WebApp_ID" version="3.1">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchemainstance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="schedule-console" version="3.0">
 
 	<display-name>SuperLogin</display-name>
 
@@ -12,12 +12,12 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath*:applicationContext.xml</param-value>
 	</context-param>
-	
+
 	<!-- 加载spring核心listener -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+
 	<!-- Spring字符集过滤器 -->
 	<filter>
 		<filter-name>SpringEncodingFilter</filter-name>
@@ -31,7 +31,7 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
-    <!-- Spring字符集过滤器mapping -->
+	<!-- Spring字符集过滤器mapping -->
 	<filter-mapping>
 		<filter-name>SpringEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -68,8 +68,8 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	
-	<welcome-file-list>  
+
+	<welcome-file-list>
 		<welcome-file>content/html/login.html</welcome-file>
 	</welcome-file-list>
 
