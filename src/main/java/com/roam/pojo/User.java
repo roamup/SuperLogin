@@ -34,4 +34,16 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
     }
+
+	public User(Integer id, String name, String password) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+	}
+
+	public User() {
+		super();
+	}
+    
 }

@@ -14,6 +14,7 @@
 			alert(pwdErrorLoginTips);
 		}
 	};
+
 </script>
 <title>Super Login</title>
 </head>
@@ -21,10 +22,15 @@
 <body>
 	<h1>Super Login!</h1>
 	<form action="/SuperLogin/login" method="post">
-		username:<input type="text" id="name" name="name"> 
-		password:<input type="password" id="password" name="password">  
-		<input type="submit" value="login"> 
-		<input name="remeberMe" type="checkbox" value="remeberMe" checked="true">记住我的登录信息
+		username:<input type="text" id="name" name="name"> password:<input
+			type="password" id="password" name="password"> <input
+			type="submit" value="login"> <input name="remeberMe"
+			type="checkbox" value="remeberMe" checked="true">记住我的登录信息
 	</form>
+
+	验证码：
+	<input type="text" name="jcaptchaCode">
+	<img class="jcaptcha-btn jcaptcha-img" src="${pageContext.request.contextPath}/jcaptcha.jpg" title="点击更换验证码">
+	<a class="jcaptcha-btn" href="changejcaptcha()">换一张</a>
 </body>
 </html>

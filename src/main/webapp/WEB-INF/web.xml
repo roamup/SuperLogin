@@ -52,6 +52,17 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<!-- 验证码过滤器需要放到Shiro之后 因为Shiro将包装HttpSession 如果不 可能造成两次的sesison id 不一样 -->
+	<filter>
+		<filter-name>JCaptchaFilter</filter-name>
+		<filter-class>com.roam.jcaptcha.JCaptchaFilter</filter-class>
+		<async-supported>true</async-supported>
+	</filter>
+	<filter-mapping>
+		<filter-name>JCaptchaFilter</filter-name>
+		<url-pattern>/jcaptcha.jpg</url-pattern>
+	</filter-mapping>
+
 	<!-- 配置springmvc前端控制器 -->
 	<servlet>
 		<servlet-name>springmvc</servlet-name>
