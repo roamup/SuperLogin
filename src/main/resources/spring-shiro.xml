@@ -19,8 +19,6 @@
 			<map>
 				<entry key="kickout" value-ref="kickoutSessionControlFilter" />
 				<!-- <entry key="ssl" value-ref="sslFilter"/> -->
-				<entry key="jCaptchaValidate" value-ref="jCaptchaValidateFilter" />
-				<entry key="authc" value-ref="authcFilter" />
 			</map>
 		</property>
 		<!-- 用户访问未对其授权的资源时，所显示的连接 -->
@@ -33,19 +31,6 @@
 			</value>
 		</property>
 	</bean>
-
-	<!-- <bean id="jCaptchaValidateFilter" class="com.roam.jcaptcha.JCaptchaValidateFilter">
-		<property name="jcaptchaEbabled" value="true" />
-		<property name="jcaptchaParam" value="jcaptchaCode" />
-		<property name="failureKeyAttribute" value="shiroLoginFailure" />
-	</bean>
-
-	<bean id="authcFilter" class="com.roam.jcaptcha.MyFormAuthenticationFilter">
-		<property name="usernameParam" value="username" />
-		<property name="passwordParam" value="password" />
-		<property name="rememberMeParam" value="rememberMe" />
-		<property name="failureKeyAttribute" value="shiroLoginFailure" />
-	</bean> -->
 
 	<!-- ssl用到的 -->
 	<!-- <bean id="sslFilter" class="org.apache.shiro.web.filter.authz.SslFilter"> 
