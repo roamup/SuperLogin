@@ -3,6 +3,7 @@
 	<name>SuperLogin</name>
 	<comment></comment>
 	<projects>
+		<project>WebServiceTest1</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

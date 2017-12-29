@@ -2,8 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript"
-	src="/SuperLogin/content/javascript/jquery.min.js"></script>
+<script type="text/javascript" src="/SuperLogin/content/javascript/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		loginErrorTimeTips();
@@ -14,6 +13,30 @@
 			alert(pwdErrorLoginTips);
 		}
 	};
+	
+	function getCaptcha(){
+		document.getElementById("captchaImg").src = "/SuperLogin/getCaptcha";
+	}
+	
+	function checkCaptcha(){
+		if(event.keyCode==13){  
+     		var checkCaptcha = document.getElementById("checkCaptcha").value;
+		    $.ajax({
+			    url : "/SuperLogin/checkCaptcha",
+			    type : "POST",
+			    dataType : "json",
+			    data : {
+			    	"checkCaptcha" : checkCaptcha
+			    },
+			    success : function(data) {
+			    	alert(data.result);
+			    },
+			    error : function() {
+			    	alert("error");
+			    }
+		    }); 
+		}
+	}
 
 </script>
 <title>Super Login</title>
@@ -27,10 +50,9 @@
 			type="submit" value="login"> <input name="remeberMe"
 			type="checkbox" value="remeberMe" checked="true">记住我的登录信息
 	</form>
+	<a href="/SuperLogin/content/html/register.html">注册一个</a>
+	<img id = 'captchaImg' src="/SuperLogin/getCaptcha" onclick='getCaptcha()'>
+    <input id='checkCaptcha'  type='text' value='' onkeypress='checkCaptcha()'>
 
-	验证码：
-	<input type="text" name="jcaptchaCode">
-	<img class="jcaptcha-btn jcaptcha-img" src="${pageContext.request.contextPath}/jcaptcha.jpg" title="点击更换验证码">
-	<a class="jcaptcha-btn" href="changejcaptcha()">换一张</a>
 </body>
 </html>

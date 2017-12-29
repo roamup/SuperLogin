@@ -1,5 +1,8 @@
 package com.roam.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -29,29 +32,29 @@ public class LoginController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public User register(User user) throws Exception {
 		user.setPassword(EncrypUtil.encryptMD5(user.getPassword()));
-		User resultUser = loginService.register(user); 
+		User resultUser = loginService.register(user);
 		if (resultUser != null) {
 			return resultUser;
-		} 
+		}
 		return null;
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(User user, String remeberMe, ModelAndView welcomeView) {
 		UsernamePasswordToken token = new UsernamePasswordToken(user.getName(), user.getPassword());
-		token.setRememberMe(remeberMe==null ? false : true );
+		token.setRememberMe(remeberMe == null ? false : true);
 		Subject subject = SecurityUtils.getSubject();
 		try {
 			subject.login(token);
 		} catch (ExcessiveAttemptsException e) {
 			welcomeView.setViewName("login");
-			welcomeView.addObject("pwdErrorLoginTips","该用户登陆错误次数超过3次，请联系客服~");
+			welcomeView.addObject("pwdErrorLoginTips", "该用户登陆错误次数超过3次，请联系客服~");
 			return welcomeView;
-		} 
-		//认证失败
+		}
+		// 认证失败
 		catch (AuthenticationException e) {
 			welcomeView.setViewName("login");
-			welcomeView.addObject("pwdErrorLoginTips","该用户还有"+ e.getMessage() + "次登录机会~");
+			welcomeView.addObject("pwdErrorLoginTips", "该用户还有" + e.getMessage() + "次登录机会~");
 			return welcomeView;
 		}
 		if (subject.isAuthenticated()) {
@@ -60,12 +63,12 @@ public class LoginController {
 				welcomeView.addObject("permission", "给管理员递茶");
 			} else if (currentUser.isPermitted("userpermission")) {
 				welcomeView.addObject("permission", "用户棒棒哒");
-			} else {//other
+			} else {// other
 				welcomeView.addObject("permission", "游客你好");
 			}
 			welcomeView.setViewName("resource/welcome");
 			welcomeView.addObject("welcomeUser", user);
-		} 
+		}
 		return welcomeView;
 	}
 
@@ -99,14 +102,14 @@ public class LoginController {
 		view.setViewName("redirect:content/html/login.html");
 		return view;
 	}
-	
+
 	@RequestMapping(value = "/changeToAdmin", method = RequestMethod.GET)
-	public ModelAndView ChangeToAdmin(ModelAndView view){
+	public ModelAndView ChangeToAdmin(ModelAndView view) {
 		Subject subject = SecurityUtils.getSubject();
 		User user = new User();
 		user.setName(subject.getPrincipal().toString());
 		User adminUser = loginService.findUserByUserId(2);
-		subject.runAs(new SimplePrincipalCollection(adminUser.getName(), ""));  
+		subject.runAs(new SimplePrincipalCollection(adminUser.getName(), ""));
 		if (subject.isPermitted("adminpermission")) {
 			view.addObject("permission", "给管理员递茶");
 		} else if (subject.isPermitted("userpermission")) {
@@ -117,11 +120,11 @@ public class LoginController {
 		view.setViewName("resource/welcome");
 		view.addObject("welcomeUser", user);
 		return view;
-		
-		//身份回退
-		/*if(subject.isRunAs()) {  
-		       subject.releaseRunAs();  
-		 }  */
+
+		// 身份回退
+		/*
+		 * if(subject.isRunAs()) { subject.releaseRunAs(); }
+		 */
 	}
-	
+
 }

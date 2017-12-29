@@ -72,6 +72,7 @@
 
 	<welcome-file-list>
 		<welcome-file>content/html/login.html</welcome-file>
+		<!-- <welcome-file>content/index.jsp</welcome-file> -->
 	</welcome-file-list>
 
 </web-app>
